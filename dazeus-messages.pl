@@ -88,10 +88,8 @@ $dazeus->subscribe("PRIVMSG" => sub {
 	# As long as the message isn't a command or factoid request, save it.
 	if (substr($msg, 0, length($sigil)) ne $sigil && substr($msg, 0, 1) ne "]" && $channel ne $dazeus->getNick($network)) {
 		if ($msg =~ /\s(is|ben|bent|zijn|was|waren|hebben|hebt|heb)\s(.+)$/) {
-			print "Nieuwe message voor $channel!\n$2\n";
 			$lastJeMoederableMessages{$channel} = $2;
 		} else {
-			print "Nieuwe message voor $channel:\n$msg\n";
 			$lastJeMoederableMessages{$channel} = $msg;
 		}
 	}
