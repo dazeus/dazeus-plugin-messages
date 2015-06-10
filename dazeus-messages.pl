@@ -51,6 +51,20 @@ $dazeus->subscribe_command("pong" => sub {
 	reply("Ping!", $network, $sender, $channel);
 });
 
+# Borsatofy?
+$dazeus->subscribe_command("b" => sub {
+	my ($self, $network, $sender, $channel, $command, $line) = @_;
+	my $verb = $line eq "" ? "Binnen" : ucfirst($line);
+	reply("$verb~~~ $verb in m'n hart, $verb in m'n ziel~~~", $network, $sender, $channel);
+});
+
+# Mo?
+$dazeus->subscribe_command("mo" => sub {
+	my ($self, $network, $sender, $channel, $command, $line) = @_;
+	$line = "winkel" if $line eq "";
+	reply("Dat is niet mijn $line, vriend!", $network, $sender, $channel);
+});
+
 # Sarcasm sign?
 $dazeus->subscribe_command("sarcasm" => sub {
 	my ($self, $network, $sender, $channel, @rest) = @_;
