@@ -95,6 +95,13 @@ $dazeus->subscribe_command("order" => sub {
 	$dazeus->action($network, $channel, "slides $what down the bar to $forwhom.", $network, $sender, $channel);
 });
 
+# Oprah?
+$dazeus->subscribe_command("oprah" => sub {
+	my ($self, $network, $sender, $channel, $command, $line) = @_;
+	$line = "car" if $line eq "";
+	reply("You get a $line! You get a $line! Everybody gets a $line!", $network, $sender, $channel);
+});
+
 # Fetch the hilight character(s).
 my $sigil = $dazeus->getConfig("core", "highlight");
 
