@@ -102,6 +102,13 @@ $dazeus->subscribe_command("oprah" => sub {
 	reply("You get a $line! You get a $line! Everybody gets a $line!", $network, $sender, $channel);
 });
 
+# Villa Volta?
+$dazeus->subscribe_command("vv" => sub {
+	my ($self, $network, $sender, $channel, $command, $line) = @_;
+	$line = "huis" if $line eq "";
+	reply("Dit $line, dit vervloekte $line...", $network, $sender, $channel);
+});
+
 # Fetch the hilight character(s).
 my $sigil = $dazeus->getConfig("core", "highlight");
 
