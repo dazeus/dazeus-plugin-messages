@@ -1,8 +1,6 @@
 #!/usr/bin/perl
 # Messages plugin for DaZeus
 # Copyright (C) 2014-2015  Aaron van Geffen <aaron@aaronweb.net>
-# 'Je moeder' function (C) 2010 Pen-Pen, 2013 Quis
-# Original module (C) 2007  Sjors Gielen <sjorsgielen@gmail.com>
 
 use strict;
 use warnings;
@@ -107,60 +105,6 @@ $dazeus->subscribe_command("vv" => sub {
 	my ($self, $network, $sender, $channel, $command, $line) = @_;
 	$line = "huis" if $line eq "";
 	reply("Dit $line, dit vervloekte $line...", $network, $sender, $channel);
-});
-
-# Fetch the hilight character(s).
-my $sigil = $dazeus->getConfig("core", "highlight");
-
-# Remember messages potentially concerning your mother.
-my %lastJeMoederableMessages;
-
-$dazeus->subscribe("PRIVMSG" => sub {
-	my ($self, $event) = @_;
-	my ($network, $sender, $channel, $msg) = @{$event->{params}};
-
-	# As long as the message isn't a command or factoid request, save it.
-	if (substr($msg, 0, length($sigil)) ne $sigil && substr($msg, 0, 1) ne "]" && $channel ne $dazeus->getNick($network)) {
-		if ($msg =~ /\b(is|ben|bent|zijn|was|waren|hebben|heeft|hebt|heb)\s+(.*)$/i) {
-			$lastJeMoederableMessages{$channel} = $2;
-		} else {
-			$lastJeMoederableMessages{$channel} = $msg;
-		}
-	}
-});
-
-# Send 'witty' replies concerning your mother.
-$dazeus->subscribe_command("m" => sub {
-	my ($self, $network, $sender, $channel, $command, $line) = @_;
-
-	# Look up a previously saved message for this channel.
-	if ($line eq "" && defined($lastJeMoederableMessages{$channel})) {
-		$line = $lastJeMoederableMessages{$channel};
-	}
-
-	# Anything interesting to add?
-	if ($line eq "") {
-		reply("Je moeder is een null-pointer!", $network, $sender, $channel);
-	} else {
-		reply("Je moeder is $line!", $network, $sender, $channel);
-	}
-});
-
-# Or, indeed, your father...
-$dazeus->subscribe_command("v" => sub {
-	my ($self, $network, $sender, $channel, $command, $line) = @_;
-
-	# Look up a previously saved message for this channel.
-	if ($line eq "" && defined($lastJeMoederableMessages{$channel})) {
-		$line = $lastJeMoederableMessages{$channel};
-	}
-
-	# Anything interesting to add?
-	if ($line eq "") {
-		reply("Je vader is een null-pointer!", $network, $sender, $channel);
-	} else {
-		reply("Je vader is $line!", $network, $sender, $channel);
-	}
 });
 
 while($dazeus->handleEvents()) {}
