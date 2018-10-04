@@ -97,7 +97,8 @@ $dazeus->subscribe_command("order" => sub {
 $dazeus->subscribe_command("oprah" => sub {
 	my ($self, $network, $sender, $channel, $command, $line) = @_;
 	$line = "car" if $line eq "";
-	reply("You get a $line! You get a $line! Everybody gets a $line!", $network, $sender, $channel);
+	my $article = index("aeiou", substr($line, 0, 1)) != -1 ? "an" : "a";
+	reply("You get $article $line! You get $article $line! Everybody gets $article $line!", $network, $sender, $channel);
 });
 
 # Villa Volta?
